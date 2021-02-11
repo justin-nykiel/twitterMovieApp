@@ -1,12 +1,14 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const cors = require('cors');
 
 
 const needle = require('needle');
 require('dotenv').config();
+app.use(cors());
 const token = process.env.BEARER_TOKEN;
-console.log(token)
+
 
 const endpointUrl = "https://api.twitter.com/2/tweets/search/recent";
 
@@ -14,12 +16,13 @@ const endpointUrl = "https://api.twitter.com/2/tweets/search/recent";
 //this would normally go in a routes file
 require('./controllers/twitter')(app)
 app.get('/test', (req, res) => {
+    const searchTerm = req.query.searchTerm
     async function getRequest() {
         // Edit query parameters below
         // specify a search query, and any additional fields that are required
         // by default, only the Tweet ID and text fields are returned
         const params = {
-            'query': 'star wars movie is:verified',
+            'query': searchTerm +' is:verified',
             'tweet.fields': 'author_id,attachments'
         }
     
@@ -43,14 +46,19 @@ app.get('/test', (req, res) => {
             // Make request
             const response = await getRequest();
             console.log(response);
-    
         } catch (e) {
             console.log(e);
             process.exit(-1);
         }
-        process.exit();
+        console.log("here")
+        res.end();
+        // process.exit(); switched to res.end to disconnect from port
     })();
-    res.send('Welcome to the backend!')
+    
+})
+
+app.get('/', (req,res) => {
+    res.json({message: "Welcome to the home page"})
 })
 //Set the port that you want the server to run on
 const port = process.env.PORT || 8080;

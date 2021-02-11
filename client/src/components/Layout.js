@@ -10,6 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 import Header from './Header'
+import Search from './Search'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,11 +43,8 @@ const Layout = () => {
         <Grid item xs={12}>
           <Header></Header>
         </Grid>
-        <Grid item xs={6}>
-            <div style={{border:"1px solid black"}}></div>
-        </Grid>
-        <Grid item xs={6}>
-            <div style={{border:"1px solid black"}}></div>
+        <Grid item xs={12}>
+            <Search></Search>
         </Grid>
         <Grid item xs={3}>
             <div style={{border:"1px solid black"}}></div>
