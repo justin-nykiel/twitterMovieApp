@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cors = require('cors');
+const axios = require('axios')
 
 
 const needle = require('needle');
@@ -17,6 +18,10 @@ const endpointUrl = "https://api.twitter.com/2/tweets/search/recent";
 require('./controllers/twitter')(app)
 app.get('/test', (req, res) => {
     const searchTerm = req.query.searchTerm
+    axios.get(`http://www.omdbapi.com/?apikey=${process.env.OMDB_KEY}&s=`+searchTerm)
+    .then((response)=>{
+        console.log(response.data)
+    })
     async function getRequest() {
         // Edit query parameters below
         // specify a search query, and any additional fields that are required
